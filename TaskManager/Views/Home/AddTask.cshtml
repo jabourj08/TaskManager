@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "AddTask";
+}
+
+<h1>Add Task For: @User.Identity.Name</h1>
+
+<form asp-controller="Home" asp-action="AddTask" method="post">
+
+    <p>Task Name<br /><input type="text" name="TaskName" placeholder="Task Name" required /></p>
+    <p>Task Details<br /><textarea name="TaskDetails" placeholder="Description" required></textarea></p>
+    <p>Task Priority<br />
+    <select name="TaskPriority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+    </select>
+    </p>
+    <p>Due Date<br /><input type="date" name="DueDate" required /></p>
+    <input type="submit" value="Add Task!" />
+
+</form>

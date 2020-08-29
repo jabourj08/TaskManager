@@ -1,0 +1,61 @@
+﻿@model TaskItem
+
+@{
+    ViewData["Title"] = "UpdateTask";
+}
+
+<h1>Update Task</h1>
+
+<form action="../Home/SaveUpdates" method="post">
+
+
+    <input type="text" name="Id" value="@Model.Id" hidden />
+    <p>Task Name<br /><input type="text" name="TaskName" value="@Model.TaskName" /></p>
+    <p>Task Details<br /><input type="text" name="TaskDetails" value="@Model.TaskDetails" /></p>
+    <p>
+        Task Priority<br />
+        <select name="TaskPriority">
+            @if (Model.TaskPriority == "Low")
+            {
+                <option value="Low" selected>Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            }
+            else if (Model.TaskPriority == "Medium")
+            {
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+            }
+            else if (Model.TaskPriority == "High")
+            {
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High" selected>High</option>
+            }
+        </select>
+    </p>
+    @{
+        string formattedDate = Model.DueDate.Value.ToString("yyyy-MM-dd");
+    }
+    <p>Due Date<br /><input type="date" name="DueDate" value="@formattedDate" required /></p>
+    <p>
+        Completion Status<br />
+        <select name="Complete">
+            @if (Model.Complete == true)
+            {
+                <option value="true" selected>Complete</option>
+                <option value="false">Incomplete</option>
+            }
+            else
+            {
+                <option value="true">Complete</option>
+                <option value="false" selected>Incomplete</option>
+            }
+        </select>
+    </p>
+    <input type="text" name="UserId" value="@Model.UserId" hidden />
+
+    <input type="submit" value="Save Changes" />
+
+</form>

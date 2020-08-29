@@ -1,0 +1,11 @@
+Use TaskManager
+
+CREATE TABLE TaskItem(
+Id INT PRIMARY KEY IDENTITY(1,1),
+UserId NVARCHAR(450) FOREIGN KEY REFERENCES AspNetUsers(Id),
+TaskName NVARCHAR(100),
+TaskDetails NVARCHAR(450),
+TaskPriority NVARCHAR(10),
+DueDate DATE,
+Complete BIT
+);

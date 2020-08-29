@@ -1,0 +1,80 @@
+﻿@model List<TaskItem>
+
+@{
+    ViewData["Title"] = "MyTasks";
+}
+
+<h1>MyTasks</h1>
+
+    <form asp-controller="Home" asp-action="SearchTasks" method="post">
+
+        <p class="float-left">
+            <input type="search" name="Search" placeholder="Search Tasks..." />
+            <input type="submit" value="Search" class="btn-dark" />
+        </p>
+
+    </form>
+
+    <form asp-controller="Home" asp-action="SortTasks" method="post">
+
+        <p class="float-left ml-3">
+            <select name="Sort" required>
+                <option value="TaskName" disabled>Sort By...</option>
+                <option value="TaskName">Task Name</option>
+                <option value="TaskNameDesc">Task Name Desc</option>
+                <option value="LowPriority">Priority: Low</option>
+                <option value="MediumPriority">Priority: Medium</option>
+                <option value="HighPriority">Priority: High</option>
+                <option value="DueDate">Due Date</option>
+                <option value="DueDateDesc">Due Date Desc</option>
+                <option value="Complete">Complete</option>
+                <option value="Incomplete">Incomplete</option>
+            </select>
+            <input type="submit" value="Sort Tasks" class="btn-dark" />
+        </p>
+
+    </form>
+
+<table class="table table-bordered shadow table-hover table-info table">
+    <tr>
+        <th>Task</th>
+        <th>Details</th>
+        <th>Priority</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Update</th>
+        <th>Remove</th>
+        <th>Change Status</th>
+    </tr>
+    @foreach (TaskItem ti in Model)
+    {
+        string formattedDate = ti.DueDate.Value.ToString("MM/dd/yyyy");
+
+        <tr>
+            <td>@ti.TaskName</td>
+            <td>@ti.TaskDetails</td>
+            <td>@ti.TaskPriority</td>
+            <td>@formattedDate</td>
+            @if (ti.Complete == true)
+            {
+                <td>COMPLETE</td>
+            }
+            else
+            {
+                <td>INCOMPLETE</td>
+            }
+
+            <td class="btn-warning">
+                <a href="../Home/UpdateTask?id=@ti.Id">Update Task</a>
+            </td>
+            <td class="btn-warning">
+                <a href="../Home/DeleteTask?id=@ti.Id">Delete Task</a>
+            </td>
+            <td class="btn-warning">
+                <a href="../Home/ChangeTaskStatus?id=@ti.Id">Change Status</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Home" asp-action="AddTask" class="btn-info">Add a New Task!</a>
