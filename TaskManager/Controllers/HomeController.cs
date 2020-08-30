@@ -28,9 +28,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public IActionResult MyTasks()
         {
-            //AspNetUsers currentUser = new AspNetUsers();
-            //string id = currentUser.Id;
-
+            //get id of logged in user
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (id != null && id != "")
@@ -56,9 +54,12 @@ namespace TaskManager.Controllers
         [HttpPost]
         public IActionResult AddTask(TaskItem newTaskItem)
         {
+            //Make sure all fields match db fields
             if (ModelState.IsValid)
             {
                 string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                //assign foreign key by logged in user
                 newTaskItem.UserId = id;
                 newTaskItem.Complete = false;
                 _TaskManager.TaskItem.Add(newTaskItem);
@@ -136,77 +137,87 @@ namespace TaskManager.Controllers
             return RedirectToAction("MyTasks");
         }
 
-        public IActionResult SearchTasks(string search)
+        // Search tasks by input string.
+        public IActionResult SearchTasks(string search, string sort)
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            TempData["Sort"] = sort;
 
             if (id != null && id != "" && search != null && search != "")
             {
-                List<TaskItem> searchedTasks = _TaskManager.TaskItem.Where(x => x.TaskDetails.ToLower().Contains(search.ToLower()) || x.TaskName.ToLower().Contains(search.ToLower())).ToList();
+                List<TaskItem> searchedTasks = _TaskManager.TaskItem.Where(x => x.TaskDetails.ToLower().Contains(search.ToLower()) && x.UserId == id || x.UserId == id && x.TaskName.ToLower().Contains(search.ToLower())).ToList();
+
+                searchedTasks = SortTasks(searchedTasks);
 
                 return View("MyTasks", searchedTasks);
             }
             else
             {
-                List<TaskItem> myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).ToList();
+                List<TaskItem> searchedTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).ToList();
 
-                return View("MyTasks", myTasks);
+                //send filtered tasks to sort
+                searchedTasks = SortTasks(searchedTasks);
+
+                return View("MyTasks", searchedTasks);
             }
         }
 
-        public IActionResult SortTasks(string sort)
+        //Sort tasks by criteria
+        public List<TaskItem> SortTasks(List<TaskItem> searchedTasks)
         {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string sort = TempData["Sort"].ToString();
 
-            if (id != null && id != "" && sort != null && sort != "")
+            if (sort == "TaskName")
             {
-                //List<TaskItem> myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).ToList();
-                List<TaskItem> myTasks = new List<TaskItem>();
+                searchedTasks = searchedTasks.OrderBy(x => x.TaskName).ToList();
+            }
+            else if (sort == "TaskNameDesc")
+            {
+                searchedTasks = searchedTasks.OrderByDescending(x => x.TaskName).ToList();
+            }
+            else if (sort == "LowPriority")
+            {
+                searchedTasks = searchedTasks.OrderByDescending(x => x.TaskPriority.Contains("Low")).ThenBy(x => x.DueDate).ToList();
+            }
+            else if (sort == "MediumPriority")
+            {
+                searchedTasks = searchedTasks.OrderByDescending(x => x.TaskPriority.Contains("Medium")).ThenBy(x => x.DueDate).ToList();
+            }
+            else if (sort == "HighPriority")
+            {
+                searchedTasks = searchedTasks.OrderByDescending(x => x.TaskPriority.Contains("High")).ThenBy(x => x.DueDate).ToList();
+            }
+            else if (sort == "DueDate")
+            {
+                searchedTasks = searchedTasks.OrderBy(x => x.DueDate).ToList();
+            }
+            else if (sort == "DueDateDesc")
+            {
+                searchedTasks = searchedTasks.OrderByDescending(x => x.DueDate).ToList();
+            }
+            else if (sort == "Complete")
+            {
+                searchedTasks = searchedTasks.OrderBy(x => x.Complete.Value == false).ThenBy(x => x.DueDate).ToList();
+            }
+            else if (sort == "Incomplete")
+            {
+                searchedTasks = searchedTasks.OrderBy(x => x.Complete.Value == true).ThenBy(x => x.DueDate).ToList();
+            }
 
-                if (sort == "TaskName")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderBy(x => x.TaskName).ToList();
-                }
-                else if (sort == "TaskNameDesc")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderByDescending(x => x.TaskName).ToList();
-                }
-                else if (sort == "LowPriority")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderByDescending(x => x.TaskPriority.Contains("Low")).ToList();
-                }
-                else if (sort == "MediumPriority")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderByDescending(x => x.TaskPriority.Contains("Medium")).ToList();
-                }
-                else if (sort == "HighPriority")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderByDescending(x => x.TaskPriority.Contains("High")).ToList();
-                }
-                else if (sort == "DueDate")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderBy(x => x.DueDate).ToList();
-                }
-                else if (sort == "DueDateDesc")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderByDescending(x => x.DueDate).ToList();
-                }
-                else if (sort == "Complete")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderBy(x => x.Complete.Value == false).ToList();
-                }
-                else if (sort == "Incomplete")
-                {
-                    myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).OrderBy(x => x.Complete.Value == true).ToList();
-                }
+            return searchedTasks;
+        }
 
-                return View("MyTasks", myTasks);
+        public IActionResult ShowFullTask(int id)
+        {
+            TaskItem currentTask = _TaskManager.TaskItem.Find(id);
+
+            if (currentTask == null)
+            {
+                return RedirectToAction("MyTasks");
             }
             else
             {
-                List<TaskItem> myTasks = _TaskManager.TaskItem.Where(x => x.UserId == id).ToList();
-
-                return View("MyTasks", myTasks);
+                return View(currentTask);
             }
         }
 

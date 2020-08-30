@@ -1,0 +1,154 @@
+﻿body {
+    background-color: #555555;
+    color: #ffffff;
+    background-image:url(hands.png);
+    background-repeat:repeat-x;
+    background-position-y:bottom ;
+}
+
+h1 {
+    text-shadow: -5px 5px 5px #000;
+}
+
+.table-z,
+.table-z > th,
+.table-z > td {
+    background-color: #a88600;
+    color: #ffffff;
+    text-shadow: -2px 2px 2px #000;
+}
+
+    .table-z th {
+        border-color: #ffcc00;
+        color: black;
+        text-align: center;
+        text-shadow:none;
+    }
+    .table-z td,
+    .table-z thead th,
+    .table-z tbody + tbody {
+        border-color: #ffcc00;
+        color: #ffffff;
+    }
+
+.table-hover .table-z:hover {
+    background-color: #abdde5;
+    color: #ffffff;
+}
+
+    .table-hover .table-z:hover > td,
+    .table-hover .table-z:hover > th {
+        background-color: #abdde5;
+        color: #ffffff;
+    }
+
+.shadow-z {
+    box-shadow: #720000 -7px 7px 10px ;
+}
+
+.footer-z {
+    background-color: #343a40;
+}
+
+a {
+    color: #cca300;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #9d7d00;
+    text-decoration: underline;
+}
+
+.btn-z {
+    box-shadow: #000000 -4px 4px 6px;
+}
+
+.btn-z2 {
+    box-shadow: #000000 -2px 2px 2px;
+    padding: 4px;
+    margin-right: 8px;
+}
+
+.btn-danger-z {
+    color: #fff;
+    background-color: #930000;
+    border-color: #dc3545;
+}
+
+.btn-danger-z:hover {
+    color: #fff;
+    background-color: #700000;
+    border-color: #bd2130;
+}
+
+.btn-info-z {
+    color: #fff;
+    background-color: #f37c2d;
+    border-color: #dc3545;
+}
+
+.btn-info-z:hover {
+    color: #fff;
+    background-color: #b65d22;
+    border-color: #bd2130;
+}
+
+.btn-success-z {
+    color: #fff;
+    background-color: #1b6c2d;
+    border-color: #1e7e34;
+}
+
+.btn-success-z:hover {
+    color: #fff;
+    background-color: #12481e;
+    border-color: #1e7e34;
+}
+
+.div-z {
+    background-color: #a88600;
+    color: #ffffff;
+    text-shadow: -2px 2px 2px #000;
+    padding: 50px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px 10px;
+    border: 3px solid #ffcc00;
+}
+
+.p-z {
+    background-color: #555555;
+    color: #ffffff;
+    text-shadow: -2px 2px 2px #000;
+    font-weight: bold;
+    border-radius: 10px 10px;
+    border: 3px solid #ffcc00;
+    padding: 20px;
+    box-shadow: #000000 -3px 3px 10px;
+}
+
+.header-z {
+    color: #ffffff;
+    font-size: larger;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.th-z {
+    color: #ffffff;
+    font-size: larger;
+    font-weight: bolder;
+    text-shadow: -2px 2px 2px #000;
+}
+
+.green-z {
+    color: #1b6c2d;
+    font-weight: bolder;
+}
+
+.red-z {
+    color: #c50000;
+    font-weight:bolder;
+}

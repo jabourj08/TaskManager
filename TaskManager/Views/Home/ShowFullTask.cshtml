@@ -1,0 +1,32 @@
+﻿@model TaskItem
+
+@{
+    ViewData["Title"] = "Task View";
+}
+
+<h1 class="mb-4">Task: @Model.TaskName</h1>
+
+<div class="div-z shadow-z col-7">
+    <p class="p-z"><span class="header-z">Details</span><br />@Model.TaskDetails</p>
+    <p class="p-z"><span class="header-z">Priority</span><br />@Model.TaskPriority</p>
+    @{string formattedDate = @Model.DueDate.Value.ToString("MM/dd/yyyy"); }
+    @if (Model.DueDate < DateTime.Now && Model.Complete == false)
+    {
+        <p class="p-z"><span class="header-z">Due Date</span><br /><span class="red-z">@formattedDate PAST DUE!</span></p>
+    }
+    else
+    {
+        <p class="p-z"><span class="header-z">Due Date</span><br />@formattedDate</p>
+    }
+    @if (Model.Complete == true)
+    {
+        <p class="p-z"><span class="header-z">Status</span><br /><span class="green-z">COMPLETE</span></p>
+    }
+    else
+    {
+        <p class="p-z"><span class="header-z">Status</span><br /><span class="red-z">INCOMPLETE</span></p>
+    }
+
+    <a asp-controller="Home" asp-action="MyTasks"><button type="submit" class="btn-dark rounded">Return to My Taskz</button></a>
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br /><br />

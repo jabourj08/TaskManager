@@ -1,22 +1,27 @@
 ﻿
 @{
-    ViewData["Title"] = "AddTask";
+    ViewData["Title"] = "Add Task";
 }
 
-<h1>Add Task For: @User.Identity.Name</h1>
+<h1 class="mb-4">Add Task For: @User.Identity.Name</h1>
 
-<form asp-controller="Home" asp-action="AddTask" method="post">
+<div class="div-z shadow-z col-7">
+    <form asp-controller="Home" asp-action="AddTask" method="post">
 
-    <p>Task Name<br /><input type="text" name="TaskName" placeholder="Task Name" required /></p>
-    <p>Task Details<br /><textarea name="TaskDetails" placeholder="Description" required></textarea></p>
-    <p>Task Priority<br />
-    <select name="TaskPriority">
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-    </select>
-    </p>
-    <p>Due Date<br /><input type="date" name="DueDate" required /></p>
-    <input type="submit" value="Add Task!" />
+        <p>Task Name<br />
+        <input type="text" name="TaskName" placeholder=" Task Name" class="input-group mt-2 rounded" required /></p>
+        <p>Task Details<br /><textarea name="TaskDetails" placeholder="Description" class="input-group mt-2 rounded" required></textarea></p>
+        <p>
+            Task Priority<br />
+            <select name="TaskPriority" class="input-group mt-2 rounded">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </p>
+        <p>Due Date<br /><input type="date" name="DueDate" class="input-group mt-2 rounded" required /></p>
+        <button type="submit" class="btn-dark rounded">Add Task!</button>
 
-</form>
+    </form>
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br /><br />

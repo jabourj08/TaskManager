@@ -161,3 +161,4 @@ C:\Users\Josh\source\repos\TaskManager\TaskManager\bin\Debug\netcoreapp3.1\zh-Ha
 C:\Users\Josh\source\repos\TaskManager\TaskManager\obj\Debug\netcoreapp3.1\Razor\Views\Home\AddTask.cshtml.g.cs
 C:\Users\Josh\source\repos\TaskManager\TaskManager\obj\Debug\netcoreapp3.1\Razor\Views\Home\MyTasks.cshtml.g.cs
 C:\Users\Josh\source\repos\TaskManager\TaskManager\obj\Debug\netcoreapp3.1\Razor\Views\Home\UpdateTask.cshtml.g.cs
+C:\Users\Josh\source\repos\TaskManager\TaskManager\obj\Debug\netcoreapp3.1\Razor\Views\Home\ShowFullTask.cshtml.g.cs
