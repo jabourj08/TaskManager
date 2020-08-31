@@ -4,6 +4,10 @@
     ViewData["Title"] = "Task View";
 }
 
+    <audio id="zombie">
+        <source src="~/sounds/Zombie-Short-Aggressive2.mp3" type="audio/mpeg">
+    </audio>
+
 <h1 class="mb-4">Task: @Model.TaskName</h1>
 
 <div class="div-z shadow-z col-7">
@@ -27,6 +31,13 @@
         <p class="p-z"><span class="header-z">Status</span><br /><span class="red-z">INCOMPLETE</span></p>
     }
 
-    <a asp-controller="Home" asp-action="MyTasks"><button type="submit" class="btn-dark rounded">Return to My Taskz</button></a>
+    <a asp-controller="Home" asp-action="MyTasks"><button type="submit" class="btn-dark rounded" onmouseover="zombieShortAggressive2()">Return to My Taskz</button></a>
 </div>
 <br /><br /><br /><br /><br /><br /><br /><br /><br />
+<script>
+    var x = document.getElementById("zombie");
+
+    function zombieShortAggressive2() {
+        x.play();
+    }
+</script>

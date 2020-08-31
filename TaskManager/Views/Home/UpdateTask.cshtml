@@ -4,6 +4,10 @@
     ViewData["Title"] = "Update Task";
 }
 
+    <audio id="zombie">
+        <source src="~/sounds/Zombie-Short-Aggressive.mp3" type="audio/mpeg">
+    </audio>
+
 <h1 class="mb-4">Update Task: @Model.TaskName</h1>
 
 <div class="div-z shadow-z col-7">
@@ -56,8 +60,15 @@
         </p>
         <input type="text" name="UserId" value="@Model.UserId" hidden />
 
-        <button type="submit" class="btn-dark rounded">Save Changes!</button>
+        <button type="submit" class="btn-dark rounded" onmouseover="zombieShortAggressive()">Save Changes!</button>
 
     </form>
 </div>
 <br /><br /><br /><br /><br /><br /><br /><br /><br />
+<script>
+    var x = document.getElementById("zombie");
+
+    function zombieShortAggressive() {
+        x.play();
+    }
+</script>

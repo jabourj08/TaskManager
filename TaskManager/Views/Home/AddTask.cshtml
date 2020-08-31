@@ -3,6 +3,10 @@
     ViewData["Title"] = "Add Task";
 }
 
+    <audio id="zombie">
+        <source src="~/sounds/Zombie-Breathing.mp3" type="audio/mpeg">
+    </audio>
+
 <h1 class="mb-4">Add Task For: @User.Identity.Name</h1>
 
 <div class="div-z shadow-z col-7">
@@ -20,8 +24,16 @@
             </select>
         </p>
         <p>Due Date<br /><input type="date" name="DueDate" class="input-group mt-2 rounded" required /></p>
-        <button type="submit" class="btn-dark rounded">Add Task!</button>
+        <button type="submit" class="btn-dark rounded" onmouseover="zombieBreathing()">Add Task!</button>
 
     </form>
 </div>
 <br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+<script>
+    var x = document.getElementById("zombie");
+
+    function zombieBreathing() {
+        x.play();
+    }
+</script>

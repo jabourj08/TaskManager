@@ -142,6 +142,7 @@ namespace TaskManager.Controllers
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             TempData["Sort"] = sort;
+            TempData["Search"] = search;
 
             if (id != null && id != "" && search != null && search != "")
             {

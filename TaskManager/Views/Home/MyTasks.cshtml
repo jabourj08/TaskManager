@@ -4,77 +4,87 @@
     ViewData["Title"] = "My Taskz";
 }
 
+    <audio id="zombie1">
+        <source src="~/sounds/Zombie-Biting.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="zombie2">
+        <source src="~/sounds/Zombie-Aggressive.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="zombie3">
+        <source src="~/sounds/Zombie-Mad.mp3" type="audio/mpeg">
+    </audio>
+
 <h1 class="mb-4">My Taskz</h1>
 
-    <form asp-controller="Home" asp-action="SearchTasks" method="post">
+<form asp-controller="Home" asp-action="SearchTasks" method="post">
 
-        <p class="float-left">
-            <input type="search" name="Search" placeholder="Search Tasks..." class="rounded" />
-            <button type="submit" class="btn-dark rounded">Search</button>
-        </p>
+    <p class="float-left">
+        <input type="search" name="Search" placeholder="Search Tasks..." value="@TempData["Search"]" class="rounded" />
+        <button type="submit" class="btn-dark rounded">Search</button>
+    </p>
 
-        <p class="float-left ml-3">
-            <select name="Sort" required class="rounded" >
-                <option value="TaskName" disabled>Sort By...</option>
-                <option value="TaskName">Task Name</option>
-                <option value="TaskNameDesc">Task Name Desc</option>
-                <option value="LowPriority">Priority: Low</option>
-                <option value="MediumPriority">Priority: Medium</option>
-                <option value="HighPriority">Priority: High</option>
-                <option value="DueDate">Due Date</option>
-                <option value="DueDateDesc">Due Date Desc</option>
-                <option value="Complete">Complete</option>
-                <option value="Incomplete">Incomplete</option>
-            </select>
-            <button type="submit" class="btn-dark rounded">Sort</button>
-        </p>
+    <p class="float-left ml-3">
+        <select name="Sort" required class="rounded">
+            <option value="TaskName" disabled>Sort By...</option>
+            <option value="TaskName">Task Name</option>
+            <option value="TaskNameDesc">Task Name Desc</option>
+            <option value="LowPriority">Priority: Low</option>
+            <option value="MediumPriority">Priority: Medium</option>
+            <option value="HighPriority">Priority: High</option>
+            <option value="DueDate">Due Date</option>
+            <option value="DueDateDesc">Due Date Desc</option>
+            <option value="Complete">Complete</option>
+            <option value="Incomplete">Incomplete</option>
+        </select>
+        <button type="submit" class="btn-dark rounded">Sort</button>
+    </p>
 
-    </form>
+</form>
 
-    <table class="table table-z table-bordered shadow-z table-hover">
+<table class="table table-z table-bordered shadow-z table-hover" id="myTable">
+    <tr>
+        <th onclick="sortTable(0)"><span class="th-z">Task</span></th>
+        <th onclick="sortTable(1)"><span class="th-z">Details</span></th>
+        <th onclick="sortTable(2)"><span class="th-z">Priority</span></th>
+        <th><span class="th-z">Due Date</span></th>
+        <th onclick="sortTable(4)"><span class="th-z">Status</span></th>
+        <th onclick="sortTable(5)"><span class="th-z">Functions</span></th>
+    </tr>
+    @foreach (TaskItem ti in Model)
+    {
+        string formattedDate = ti.DueDate.Value.ToString("MM/dd/yyyy");
+
+
         <tr>
-            <th><span class="th-z">Task</span></th>
-            <th><span class="th-z">Details</span></th>
-            <th><span class="th-z">Priority</span></th>
-            <th><span class="th-z">Due Date</span></th>
-            <th><span class="th-z">Status</span></th>
-            <th><span class="th-z">Functions</span></th>
-        </tr>
-        @foreach (TaskItem ti in Model)
-        {
-            string formattedDate = ti.DueDate.Value.ToString("MM/dd/yyyy");
-
-
-            <tr>
-                <td>@ti.TaskName</td>
-                @{string detailPreview;}
-                @if (ti.TaskDetails.Length < 25)
-                {
-                    detailPreview = ti.TaskDetails;
-                    <td>@detailPreview</td>
-                }
-                else
-                {
-                    detailPreview = ti.TaskDetails.Substring(0, 25);
-                    <td>@detailPreview ...</td>
-                }
-                <td>@ti.TaskPriority</td>
-                <td>@formattedDate</td>
-                @if (ti.Complete == true)
-                {
-                    <td>COMPLETE</td>
-                }
-                else
-                {
-                    <td>INCOMPLETE</td>
-                }
+            <td>@ti.TaskName</td>
+            @{string detailPreview;}
+            @if (ti.TaskDetails.Length < 25)
+            {
+                detailPreview = ti.TaskDetails;
+                <td>@detailPreview</td>
+            }
+            else
+            {
+                detailPreview = ti.TaskDetails.Substring(0, 25);
+                <td>@detailPreview ...</td>
+            }
+            <td>@ti.TaskPriority</td>
+            <td>@formattedDate</td>
+            @if (ti.Complete == true)
+            {
+                <td>COMPLETE</td>
+            }
+            else
+            {
+                <td>INCOMPLETE</td>
+            }
 
             <td style="text-align:center">
                 <a href="../Home/ShowFullTask?id=@ti.Id"><button class="btn-dark btn btn-z2">View</button></a>
-                <a href="../Home/ChangeTaskStatus?id=@ti.Id"><button class="btn-success-z btn btn-z2">Change Status</button></a>
+                <a href="../Home/ChangeTaskStatus?id=@ti.Id"><button class="btn-success-z btn btn-z2" onmouseover="zombieBiting()">Change Status</button></a>
                 <a href="../Home/UpdateTask?id=@ti.Id"><button class="btn-info-z btn btn-z2">Update</button></a>
                 @*<a href="../Home/DeleteTask?id=@ti.Id"><button class="btn-danger-z btn btn-z2" onclick="confirmDelete()">Delete</button></a>*@
-                <button class="btn-danger-z btn btn-z2" onclick="confirmDelete()">Delete</button>
+                <button class="btn-danger-z btn btn-z2" onclick="confirmDelete()" onmouseover="zombieMad()">Delete</button>
 
                 <script type="text/javascript">
                     function confirmDelete() {
@@ -94,8 +104,89 @@
 
             </td>
 
-            </tr>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Home" asp-action="AddTask"><button class="btn btn-dark btn-z mt-2" onmouseover="zombieAgressive()" type="button">Add a New Task!</button></a>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<script>
+    var x = document.getElementById("zombie1");
+    var y = document.getElementById("zombie2");
+    var z = document.getElementById("zombie3");
+
+    function zombieBiting() {
+        x.play();
+    }
+    function zombieAgressive() {
+        y.play();
+    }
+    function zombieMad() {
+        z.play();
+    }
+</script>
+
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc";
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /*check if the two rows should switch place,
+                based on the direction, asc or desc:*/
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                //Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /*If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again.*/
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
         }
-    </table>
-<a asp-controller="Home" asp-action="AddTask"><button class="btn btn-dark btn-z mt-2">Add a New Task!</button></a>
-<br /><br /><br /><br /><br /><br /><br /><br /><br />
+    }
+</script>
