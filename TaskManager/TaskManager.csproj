@@ -6,13 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\topBlood2.png" />
     <Content Remove="wwwroot\css\zombieHandsAnimated.gif" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\css\blood.png" />
+    <None Include="wwwroot\css\blood2.png" />
+    <None Include="wwwroot\css\blood3.png" />
     <None Include="wwwroot\css\hands.gif" />
     <None Include="wwwroot\css\hands.png" />
+    <None Include="wwwroot\css\topBlood.png" />
+    <None Include="wwwroot\css\topBlood2.png" />
     <None Include="wwwroot\css\zombieHandsAnimated.gif" />
     <None Include="wwwroot\css\zombieHandsAnimated2.gif" />
     <None Include="wwwroot\sounds\Zombie-Aggressive.mp3" />

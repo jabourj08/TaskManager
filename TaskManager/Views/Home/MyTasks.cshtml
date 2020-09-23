@@ -24,8 +24,8 @@
     </p>
 
     <p class="float-left ml-3">
-        <select name="Sort" required class="rounded">
-            <option value="TaskName" disabled>Sort By...</option>
+        <select name="Sort" class="rounded" required>
+            <option selected>Sort By...</option>
             <option value="TaskName">Task Name</option>
             <option value="TaskNameDesc">Task Name Desc</option>
             <option value="LowPriority">Priority: Low</option>
@@ -36,7 +36,7 @@
             <option value="Complete">Complete</option>
             <option value="Incomplete">Incomplete</option>
         </select>
-        <button type="submit" class="btn-dark rounded">Sort</button>
+        <input type="submit" class="btn-dark rounded" value="Sort">
     </p>
 
 </form>
@@ -83,24 +83,18 @@
                 <a href="../Home/ShowFullTask?id=@ti.Id"><button class="btn-dark btn btn-z2">View</button></a>
                 <a href="../Home/ChangeTaskStatus?id=@ti.Id"><button class="btn-success-z btn btn-z2" onmouseover="zombieBiting()">Change Status</button></a>
                 <a href="../Home/UpdateTask?id=@ti.Id"><button class="btn-info-z btn btn-z2">Update</button></a>
-                @*<a href="../Home/DeleteTask?id=@ti.Id"><button class="btn-danger-z btn btn-z2" onclick="confirmDelete()">Delete</button></a>*@
-                <button class="btn-danger-z btn btn-z2" onclick="confirmDelete()" onmouseover="zombieMad()">Delete</button>
+                <a href="../Home/DeleteTask?id=@ti.Id"><button class="btn-danger-z btn btn-z2" onclick="confirmDelete()">Delete</button></a>
+                @*<button class="btn-danger-z btn btn-z2" onclick="confirmDelete()" onmouseover="zombieMad()">Delete</button>*@
 
-                <script type="text/javascript">
+                @*<script type="text/javascript">
                     function confirmDelete() {
                         var url = '../Home/DeleteTask?id=@ti.Id';
                         var c1 = confirm("Are you sure you want to delete this task? OK=Yes, Cancel=No")
                         if (c1 == true) {
-                            var c2 = confirm("Are you REALLY sure you want to delete this task?? OK=Yes, Cancel=No")
-                            if (c2 == true) {
-                                var c3 = confirm("Are you REALLY REALLY sure you want to delete this task??? OK=Yes, Cancel=No")
-                                if (c3 == true) {
                                     window.location.href = url;
-                                }
-                            }
                         }
                     }
-                </script>
+                </script>*@
 
             </td>
 
